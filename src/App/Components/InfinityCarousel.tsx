@@ -57,7 +57,7 @@ const data = [
       desc: "Django",
    },
    {
-      image: "/images/git.png",
+      image: "/images/github.png",
       desc: "Git",
    },
    {
@@ -67,26 +67,8 @@ const data = [
 ];
 
 const InfinityCarousel = () => {
-   let [ref, { width }] = useMeasure();
-   const xTranslation = useMotionValue(0);
-
-   //    useEffect(() => {
-   //       let controls;
-   //       let finalPosition = -width / 2 - 8;
-
-   //       controls = animate<number>(xTranslation, [0, finalPosition], {
-   //          ease: "linear",
-   //          duration: "25",
-   //          repeat: Infinity,
-   //          repeatType: "loop",
-   //          repeatDelay: 0,
-   //       });
-
-   //       return controls.stop;
-   //    }, [xTranslation, width]);
-
    return (
-      <div className="relative w-3/5 mt-4 ml-4 overflow-hidden">
+      <div className="relative w-full mt-10 ml-4 overflow-hidden">
          {/* Wrapping div for seamless looping */}
          <motion.div
             className="flex gap-10"
@@ -106,7 +88,7 @@ const InfinityCarousel = () => {
                   style={{ width: `${100 / data.length}%` }}
                >
                   <div className="flex items-center justify-center h-full">
-                     <Image src={slide.image} alt="icons" />
+                     <Image src={slide.image} alt="icons" className="w-10" />
                   </div>
                </div>
             ))}

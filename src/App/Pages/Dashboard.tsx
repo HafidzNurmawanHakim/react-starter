@@ -1,12 +1,69 @@
-import React from "react";
-import SidePanel from "../Components/SidePanel";
+import React, { useEffect, useState } from "react";
 import FadeText from "../Components/FadeText";
-import FirstSection from "../Components/FirstSection";
 import { Button, Image } from "@nextui-org/react";
 import NumberCounter from "../Components/NumberCounter";
 import InfinityCarousel from "../Components/InfinityCarousel";
+import Carousel from "../Components/Carousel";
+import VideoPlayer from "../Components/VideoPlayer";
+
+const history = [
+   {
+      type: "image",
+      src: "/images/portov1.jpeg",
+      link: "https://hafidznurmawan.netlify.app",
+      git: "https://github.com/HafidzNurmawanHakim/ReactJs-Porto",
+   },
+   {
+      type: "image",
+      src: "/images/hrm-cal.jpeg",
+      link: "https://hnh-crm.netlify.app",
+      git: "",
+   },
+   {
+      type: "image",
+      src: "/images/hrm-cal2.jpeg",
+      link: "https://hnh-crm.netlify.app",
+      git: "",
+   },
+   {
+      type: "image",
+      src: "/images/hrm-cal3.jpeg",
+      link: "https://hnh-crm.netlify.app",
+      git: "",
+   },
+   {
+      type: "video",
+      src: "/videos/WhatsApp Video 2024-05-04 at 15.03.43.mp4",
+      thumb: "/images/porto-v1.png",
+      link: "https://hnh-crm.netlify.app",
+      git: "",
+   },
+   {
+      type: "video",
+      src: "/videos/WhatsApp Video 2024-05-04 at 15.04.24.mp4",
+      thumb: "/images/crm.png",
+      link: "https://hafidznurmawan.netlify.app",
+      git: "https://github.com/HafidzNurmawanHakim/ReactJs-Porto",
+   },
+];
 
 const Dashboard = () => {
+   const [index, setIndex] = useState(0);
+   const [hover, setHover] = useState(false);
+
+   useEffect(() => {
+      if (hover) return;
+      const intervalId = setInterval(() => {
+         setIndex((state) =>
+            state >= history.length - 1 ? (state = 0) : state + 1
+         );
+      }, 4000);
+
+      return () => {
+         clearInterval(intervalId);
+      };
+   }, [hover]);
+
    return (
       <div className="w-screen h-screen bg-base overflow-hidden flex items-center">
          <div id="container" className="bg-base m-auto h-[90%] w-[90%] flex ">
@@ -38,7 +95,7 @@ const Dashboard = () => {
                         <div className="flex items-center gap-6 w-full">
                            <Button
                               isIconOnly
-                              variant="light"
+                              variant="flat"
                               className="w-16 h-16"
                               as="a"
                               href="https://linkedin.com/in/hafidznurmawan"
@@ -52,21 +109,21 @@ const Dashboard = () => {
                            </Button>
                            <Button
                               isIconOnly
-                              variant="light"
+                              variant="flat"
                               className="w-16 h-16"
                               as="a"
                               href="https://github.com/hafidznurmawanhakim"
                               target="_blank"
                            >
                               <img
-                                 src="/images/git.png"
+                                 src="/images/github.png"
                                  alt="github"
                                  className="w-10"
                               />
                            </Button>
                            <Button
                               isIconOnly
-                              variant="light"
+                              variant="flat"
                               className="w-16 h-16"
                               as="a"
                               href="https://instagram.com/hafidz_nh"
@@ -88,17 +145,47 @@ const Dashboard = () => {
                className="inital w-full rounded-l-3xl rounded-br-3xl bg-foreground rounded-3xl bg-gradient-to-b from-foreground to-base"
             >
                <div className="grid grid-cols-3 grid-rows-4 gap-4 h-full">
-                  <div className="row-span-4 col-start-3 row-start-1">
-                     <NumberCounter />
+                  <div className="row-span-4 col-start-3 row-start-1 flex flex-col gap-10 pt-10">
+                     <NumberCounter count={20} title="Projects" />
+                     <NumberCounter count={240} title="Task Cleared" />
+                     <NumberCounter
+                        count={6720}
+                        title="Flight hours"
+                        speed={1000}
+                     />
                   </div>
-                  <div className="col-span-2 col-start-1 row-start-1">
+                  <div className="col-span-2 col-start-1 row-start-1 pt-8">
                      <InfinityCarousel />
                   </div>
                   <div className="col-span-2 col-start-1 row-start-4">
                      <FadeText />
                   </div>
-                  <div className="col-span-2 row-span-2 col-start-1 row-start-2">
-                     9
+                  <div className="col-span-2 row-span-2 col-start-1 row-start-2 px-2">
+                     <div
+                        className="w-full h-full rounded-xl bg-black border-box"
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                     >
+                        <Carousel
+                           data={history}
+                           index={index}
+                           setIndex={setIndex}
+                           render={(props, index) =>
+                              props.type === "image" ? (
+                                 <div className="px-6 flex justify-center items-center rounded-2xl">
+                                    <Image src={props.src} />
+                                 </div>
+                              ) : (
+                                 <div className="px-6 flex justify-center items-center rounded-2xl">
+                                    <VideoPlayer
+                                       src={props.src}
+                                       thumbnail={props.thumb}
+                                    />
+                                 </div>
+                              )
+                           }
+                        />
+                     </div>
                   </div>
                </div>
             </div>

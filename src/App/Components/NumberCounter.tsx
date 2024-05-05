@@ -1,20 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
-const NumberCounter = () => {
+const NumberCounter: FC<{ title?: string; count: number; speed?: number }> = ({
+   title,
+   count,
+   speed,
+}) => {
    const [num, setNum] = useState(0);
    useEffect(() => {
-      const secon = 4000;
-      const duration = Math.floor(4000 / 99);
+      const secon = speed || 4000;
+      const duration = Math.floor(secon / count);
+      console.log({ duration });
       let number = 0;
       const interval = setInterval(() => {
          number += 1;
          setNum(number);
-         if (number === 99) clearInterval(interval);
+         if (number === count) clearInterval(interval);
       }, duration);
 
       return () => clearInterval(interval);
    }, []);
-   return <div>{num}</div>;
+   return (
+      <div className="flex flex-col w-full justify-center items-center h-20">
+         <span className="text-4xl text-fontHeader">{num}+</span>
+         <span className="text-xl text-fontBase">{title}</span>
+      </div>
+   );
 };
 
 export default NumberCounter;
