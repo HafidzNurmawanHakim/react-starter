@@ -5,23 +5,22 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { NextUIProvider } from "@nextui-org/react";
 import { Provider } from "react-redux";
-import { store } from "./App/Store";
-import { AppControllerProvider } from "./App/Core/AppController";
-import { BrowserRouter } from "react-router-dom";
+import { store } from "./App/store";
+import { AppControllerProvider } from "./App/modules/main/AppController";
 
 const root = ReactDOM.createRoot(
-	document.getElementById("root") as HTMLElement
+   document.getElementById("root") as HTMLElement
 );
 root.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<AppControllerProvider>
-				<NextUIProvider>
-					<App />
-				</NextUIProvider>
-			</AppControllerProvider>
-		</Provider>
-	</React.StrictMode>
+   <React.StrictMode>
+      <Provider store={store}>
+         <AppControllerProvider>
+            <NextUIProvider>
+               <App />
+            </NextUIProvider>
+         </AppControllerProvider>
+      </Provider>
+   </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
